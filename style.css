@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #502781;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    width: 90%;
+    height: 90%;
+    border-radius: 2vw;
+    overflow: hidden;
+    background-color: #6C48B2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1vw;
+}
+
+.text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1vw;
+    text-align: center;
+    color: #fff;
+}
+
+.yellow {
+    font-weight: 900;
+    font-size: 1.2vw;
+    color: #FEDA00;
+}
+
+.message {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    position: fixed;
+    top: 1vw;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, .8);
+    padding: 1vw 2vw;
+    border-radius: 1vw;
+    z-index: 10;
+    display: none;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 1vw 3vw;
+    background-color: #FF1A6C;
+    border: none;
+    border-radius: .5vw;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, .2);
+}
+
+button:hover {
+    transform: translateY(-3px);
+}
+        
+button:active {
+    transform: translateY(1px);
+}   
+
+.game {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(2, 50%);
+    gap: 1vw;
+    perspective: 50vw;
+}
+
+.card {
+    width: 10vw;
+    height: 26vh;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
+    animation: deal 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    opacity: 0;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .6s ease;
+}
+
+.card-front {
+    transform: rotateY(180deg);
+}
+
+.card-back {
+    background-image: url('./img/cover.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 1vw;
+    object-fit: cover;
+    filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
+}
+
+@keyframes deal {
+    0% { transform: translateY(-500px) rotateY(180deg) rotateZ(30deg); opacity: 0; }
+    100% { transform: translateY(0) rotateY(0) rotateZ(0); opacity: 1; }
+}
+
+.card:nth-child(1) { animation-delay: .1s; }
+.card:nth-child(2) { animation-delay: .2s; }
+.card:nth-child(3) { animation-delay: .3s; }
+.card:nth-child(4) { animation-delay: .4s; }
+.card:nth-child(5) { animation-delay: .5s; }
+.card:nth-child(6) { animation-delay: .6s; }
+
+.card.flipped .card-front { transform: rotateY(0deg); }
+.card.flipped .card-back { transform: rotateY(180deg); }
+
+.card.zoomed {
+    scale: 2;
+    z-index: 10;
+    position: absolute;
+    left: 35%;
+    top: 27%;
+    transform: translate(50%, 50%);
+    transition: all .4s ease;
+}
+    
+.card-img {
+    border-radius: 1vw;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
+}
+
+@media (max-width: 960px) {
+    .text {
+        font-size: 1.5vw;
+    }
+    .yellow {
+        font-size: 2vw;
+    }
+    .card {
+        width: 20vw;
+        height: 26vh;
+    }
+    button {
+        padding: 2vw 6vw;
+        font-size: 2vw;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        background-color: #512f7f;
+    }
+    main {
+        padding: 4vw;
+    }
+    .game {
+        grid-template-columns: repeat(2, 50%);
+        grid-template-rows: repeat(3, 33%);
+    }
+    .text {
+        font-size: 4vw;
+    }
+    .yellow {
+        font-size: 5vw;
+    }
+    .card {
+        width: 23vw;
+        height: 17vh;
+    }
+    button {
+        padding: 5vw 15vw;
+        font-size: 4vw;
+        border-radius: 2vw;
+    }
+    .message {
+        font-size: 3vw;
+        top: 5vw;
+        padding: 2vw 5vw;
+        border-radius: 1vw;
+    }
+    .card.zoomed {
+        scale: 3;
+        left: 25%;
+        top: 30%;
+    }
+}
