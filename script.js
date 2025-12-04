@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         './img/6.png'
     ];
     
+    // Промокоды для каждой карточки (можно изменить на свои)
     const promoCodes = [
         'NEWYEAR2025',
         'MAGIC2025',
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sound.src.includes('undefined')) {
             sound.currentTime = 0;
             sound.play().catch(() => {
+                // Игнорируем ошибки воспроизведения
             });
         }
     }
@@ -120,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openZoom(card) {
+        // Закрываем все другие увеличенные карты
         if (zoomedCard && zoomedCard !== card) {
             zoomedCard.classList.remove('zoomed');
         }
@@ -129,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playSound(zoomSound);
         zoomedCard = card;
         
+        // Можно добавить копирование промокода при долгом нажатии
         card.addEventListener('contextmenu', handlePromoCode);
     }
 
@@ -147,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const promo = card.dataset.promo;
         
         if (promo) {
+            // Копируем промокод в буфер обмена
             navigator.clipboard.writeText(promo).then(() => {
                 showMessage(`Промокод ${promo} скопирован!`);
             }).catch(() => {
@@ -163,16 +168,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
+    // Закрытие увеличенной карточки при клике на overlay
     overlay.addEventListener('click', () => {
         closeZoom();
     });
 
+    // Закрытие по клавише Escape
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && zoomedCard) {
             closeZoom();
         }
     });
 
+    // Предотвращение закрытия при клике на саму карточку
     document.addEventListener('click', (e) => {
         if (zoomedCard && !e.target.closest('.card')) {
             closeZoom();
