@@ -145,7 +145,9 @@ main {
     filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
 }
 
-    .card:hover .card-back {
+    .card:hover .card-back,
+.card:hover .card-front
+{
     filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
 }
 
@@ -197,3 +199,4 @@ main {
         top: 30%;
     }
 }
+
