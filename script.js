@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const game = document.querySelector('.game');
     const message = document.querySelector('.message');
- 
+
     const cardImages = [
         './img/1.png',
         './img/2.png',
@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
         './img/5.png',
         './img/6.png'
     ];
-
    
+    let selectedCards = [];
     let canFlip = false;
+    let gameStarted = true;
     let zoomed = false;
     const dealSound = new Audio();
     const flipSound = new Audio();
@@ -24,14 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
     flipSound.volume = 0.7;
     zoomSound.volume = 0.4;
 
-  
-startGame();
+       startGame();
+
     function startGame() {
         canFlip = true;
         game.innerHTML = ``;
-     
+        selectedCards = [];
         
-
+      
         const shuffledCards = [...cardImages].sort(() => Math.random() - 0.5);
         
         shuffledCards.forEach((item, index) => {
@@ -75,7 +76,6 @@ startGame();
                 toggleZoom(card);
                 return;
             }
-            
           
             
             canFlip = false;
@@ -88,7 +88,7 @@ startGame();
                 canFlip = true;
             }, 600);
             
-          
+            
         });
     }
 
@@ -97,7 +97,7 @@ startGame();
             card.classList.remove('zoomed');
             zoomed = false;
         } else {
-        
+          
             document.querySelectorAll('.zoomed').forEach(c => {
                 c.classList.remove('zoomed');
             });
