@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -14,36 +13,31 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #502781 0%, #3a1d5f 100%);
+    background-color: #502781;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
 
 main {
     width: 90%;
     height: 90%;
     border-radius: 2vw;
-    overflow: visible;
-    background: linear-gradient(135deg, #6C48B2 0%, #5a3a95 100%);
+    overflow: hidden;
+    background-color: #6C48B2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     padding: 1vw;
-    box-shadow: 0 2vw 4vw rgba(0, 0, 0, 0.3);
-    position: relative;
-    z-index: 1;
 }
 
 .text {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
-    font-size: 1.2vw;
+    font-size: 1vw;
     text-align: center;
     color: #fff;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .yellow {
@@ -53,6 +47,7 @@ main {
     text-shadow: 0 2px 8px rgba(254, 218, 0, 0.5);
 }
 
+
 .message {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
@@ -61,79 +56,23 @@ main {
     text-transform: uppercase;
     color: #fff;
     position: fixed;
-    top: 2vw;
+    top: 1vw;
     left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: rgba(0, 0, 0, .85);
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, .8);
     padding: 1vw 2vw;
     border-radius: 1vw;
-    z-index: 1001;
-    opacity: 0;
-    transition: all 0.3s ease;
-    pointer-events: none;
+    z-index: 10;
+    display: none;
 }
 
-.message.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-button {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1vw;
-    text-align: center;
-    text-transform: uppercase;
-    color: #fff;
-    padding: 1vw 3vw;
-    background: linear-gradient(135deg, #FF1A6C 0%, #d91459 100%);
-    border: none;
-    border-radius: .5vw;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0.5vw 1vw rgba(0, 0, 0, .3);
-}
-
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 0.7vw 1.5vw rgba(0, 0, 0, .4);
-}
-        
-button:active {
-    transform: translateY(1px);
-}   
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    z-index: 50;
-    backdrop-filter: blur(8px);
-}
-
-.overlay.active {
-    opacity: 1;
-    pointer-events: all;
-}
 
 .game {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 0.8vw;
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(2, 50%);
+    gap: 1vw;
     perspective: 50vw;
-    width: 100%;
-    max-width: 60vw;
-    height: 60vh;
-    padding: 1vw;
-    place-items: center;
 }
 
 .card {
@@ -145,7 +84,6 @@ button:active {
     user-select: none;
     animation: deal 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
     opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card-face {
@@ -157,7 +95,7 @@ button:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.6s ease;
+    transition: all .6s ease;
 }
 
 .card-front {
@@ -171,23 +109,12 @@ button:active {
     background-size: cover;
     border-radius: 1vw;
     object-fit: cover;
-    filter: drop-shadow(0 0 .8vw rgba(0, 0, 0, .4));
-    transition: filter 0.3s ease;
-}
-
-.card:hover .card-back {
-    filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
+    filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
 }
 
 @keyframes deal {
-    0% { 
-        transform: translateY(-500px) rotateY(180deg) rotateZ(30deg); 
-        opacity: 0; 
-    }
-    100% { 
-        transform: translateY(0) rotateY(0) rotateZ(0); 
-        opacity: 1; 
-    }
+    0% { transform: translateY(-500px) rotateY(180deg) rotateZ(30deg); opacity: 0; }
+    100% { transform: translateY(0) rotateY(0) rotateZ(0); opacity: 1; }
 }
 
 .card:nth-child(1) { animation-delay: .1s; }
@@ -197,125 +124,76 @@ button:active {
 .card:nth-child(5) { animation-delay: .5s; }
 .card:nth-child(6) { animation-delay: .6s; }
 
-.card.flipped .card-front { 
-    transform: rotateY(0deg); 
-}
-
-.card.flipped .card-back { 
-    transform: rotateY(180deg); 
-}
+.card.flipped .card-front { transform: rotateY(0deg); }
+.card.flipped .card-back { transform: rotateY(180deg); }
 
 .card.zoomed {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(2.5);
-    z-index: 1000;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    animation: zoomPulse 0.6s ease-out;
-}
-
-.card.zoomed .card-face {
-    box-shadow: 0 2vw 6vw rgba(254, 218, 0, 0.4), 
-                0 0 3vw rgba(255, 255, 255, 0.3);
-}
-
-@keyframes zoomPulse {
-    0% {
-        transform: translate(-50%, -50%) scale(1) rotateY(0deg);
-        filter: brightness(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(2.7) rotateY(0deg);
-        filter: brightness(1.2);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(2.5) rotateY(0deg);
-        filter: brightness(1);
-    }
-}
-
-.card.flipped {
-    animation: flipCard 0.6s ease-out;
-}
-
-@keyframes flipCard {
-    0% {
-        transform: rotateY(0deg) scale(1);
-    }
-    50% {
-        transform: rotateY(90deg) scale(1.1);
-    }
-    100% {
-        transform: rotateY(180deg) scale(1);
-    }
+    scale: 2;
+    z-index: 10;
+    position: absolute;
+    left: 35%;
+    top: 27%;
+    transform: translate(50%, 50%);
+    transition: all .4s ease;
 }
     
 .card-img {
     border-radius: 1vw;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
+}
+
+    .card:hover .card-back {
+    filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
 }
 
 @media (max-width: 960px) {
     .text {
-        font-size: 1.8vw;
+        font-size: 1.5vw;
     }
     .yellow {
         font-size: 2.2vw;
     }
-    button {
-        padding: 2vw 6vw;
-        font-size: 2vw;
+    .card {
+        width: 20vw;
+        height: 26vh;
     }
-    .game {
-        max-width: 70vw;
-    }
+ 
 }
 
 @media (max-width: 480px) {
     body {
-        background: linear-gradient(135deg, #512f7f 0%, #3a1d5f 100%);
+        background-color: #512f7f;
     }
     main {
         padding: 4vw;
-        width: 95%;
-        height: 95%;
     }
     .game {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-        max-width: 100%;
-        height: 70vh;
-        gap: 2vw;
-        padding: 0;
+        grid-template-columns: repeat(2, 50%);
+        grid-template-rows: repeat(3, 33%);
     }
     .text {
         font-size: 4vw;
     }
-    .yellow {
+       .yellow {
         font-size: 5vw;
     }
-    button {
-        padding: 5vw 15vw;
-        font-size: 4vw;
-        border-radius: 2vw;
+    .card {
+        width: 23vw;
+        height: 17vh;
     }
+ 
     .message {
-        font-size: 3.5vw;
+        font-size: 3vw;
         top: 5vw;
-        padding: 3vw 6vw;
-        border-radius: 2vw;
+        padding: 2vw 5vw;
+        border-radius: 1vw;
     }
     .card.zoomed {
-        transform: scale(2.5);
-    }
-}
-
-@media (max-width: 360px) {
-    .card.zoomed {
-        transform: translate(-50%, -50%) scale(2.2);
+        scale: 3;
+        left: 25%;
+        top: 30%;
     }
 }
