@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const game = document.querySelector('.game');
     const message = document.querySelector('.message');
-    const button = document.querySelector('button');
     const cardImages = [
         './img/1.png',
         './img/2.png',
@@ -10,10 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
         './img/5.png',
         './img/6.png'
     ];
-    const MAX_SELECTED = 3;
     let selectedCards = [];
     let canFlip = false;
-    let gameStarted = false;
+    let gameStarted = true;
     let zoomed = false;
     const dealSound = new Audio();
     const flipSound = new Audio();
@@ -25,20 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
     flipSound.volume = 0.7;
     zoomSound.volume = 0.4;
 
-    button.addEventListener('click', () => {
-        if (!gameStarted) {
-            button.style.display = 'none';
-            gameStarted = true;
-            startGame();
-        }
-    });
+    startGame();
 
     function startGame() {
         canFlip = true;
         game.innerHTML = ``;
         selectedCards = [];
-        
-        // Создаем перемешанный массив карт
+
         const shuffledCards = [...cardImages].sort(() => Math.random() - 0.5);
         
         shuffledCards.forEach((item, index) => {
@@ -83,11 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
-            if (selectedCards.length >= MAX_SELECTED) {
-                showMessage();
-                return;
-            }
-            
             canFlip = false;
             card.classList.add('flipped');
             toggleZoom(card);
@@ -98,11 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 canFlip = true;
             }, 600);
             
-            if (selectedCards.length === MAX_SELECTED) {
-                setTimeout(() => {
-                    selectedCards.forEach(c => c.classList.add('locked'));
-                }, 300);
-            }
+          
         });
     }
 
@@ -129,3 +111,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 });
+
