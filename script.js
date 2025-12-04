@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const game = document.querySelector('.game');
     const message = document.querySelector('.message');
-    const overlay = document.querySelector('.overlay');
-    
+ 
     const cardImages = [
         './img/1.png',
         './img/2.png',
@@ -11,66 +10,47 @@ document.addEventListener('DOMContentLoaded', () => {
         './img/5.png',
         './img/6.png'
     ];
-    
-    // Промокоды для каждой карточки (можно изменить на свои)
-    const promoCodes = [
-        'NEWYEAR2025',
-        'MAGIC2025',
-        'LUCKY2025',
-        'WINTER2025',
-        'GIFT2025',
-        'HAPPY2025'
-    ];
-    
-    let selectedCards = [];
-    let canFlip = true;
-    let gameStarted = true;
-    let zoomedCard = null;
-    
+
+   
+    let canFlip = false;
+    let zoomed = false;
     const dealSound = new Audio();
     const flipSound = new Audio();
     const zoomSound = new Audio();
-    
     dealSound.src = './sounds/dealSound.wav';
-    flipSound.src = './sounds/flipSound.wav';
-    zoomSound.src = './sounds/zoomSound.wav';
-    
+    flipSound.src = './sounds/dealSound.wav';
+    zoomSound.src = './sounds/dealSound.wav';
     dealSound.volume = 0.5;
     flipSound.volume = 0.7;
     zoomSound.volume = 0.4;
 
-    startGame();
-
+  
+startGame();
     function startGame() {
         canFlip = true;
-        game.innerHTML = '';
-        selectedCards = [];
+        game.innerHTML = ``;
+     
+        
 
         const shuffledCards = [...cardImages].sort(() => Math.random() - 0.5);
-        const shuffledPromos = [...promoCodes].sort(() => Math.random() - 0.5);
         
         shuffledCards.forEach((item, index) => {
             setTimeout(() => {
-                createCard(item, index, shuffledPromos[index]);
+                createCard(item, index);
                 setTimeout(() => playSound(dealSound), index * 60);
             }, index * 200);
         });
     }
 
     function playSound(sound) {
-        if (!sound.src.includes('undefined')) {
-            sound.currentTime = 0;
-            sound.play().catch(() => {
-                // Игнорируем ошибки воспроизведения
-            });
-        }
+        sound.currentTime = 0;
+        sound.play();
     }
 
-    function createCard(item, index, promoCode) {
+    function createCard(item, index) {
         const card = document.createElement('div');
         card.className = 'card';
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.dataset.promo = promoCode;
+        card.style.animationDelay = `${index * 0.1}s`;    
         
         const front = document.createElement('div');
         front.className = 'card-face card-front';
@@ -78,11 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const img = document.createElement('img');
         img.src = item;
         img.className = 'card-img';
-        img.alt = 'Карта предсказания ' + (index + 1);
-        img.draggable = false;
+        img.alt = 'Карта ' + (index + 1);
         
         front.appendChild(img);
-        
         const back = document.createElement('div');
         back.className = 'card-face card-back';
         
@@ -90,9 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.appendChild(back);
         game.appendChild(card);
 
-        card.addEventListener('click', (e) => { 
-            e.stopPropagation();
-            
+        card.addEventListener('click', () => { 
             if (!canFlip || !gameStarted) return; 
             
             if (card.classList.contains('flipped')) {
@@ -100,90 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             
+          
+            
             canFlip = false;
             card.classList.add('flipped');
+            toggleZoom(card);
+            selectedCards.push(card);
             playSound(flipSound);
             
             setTimeout(() => {
-                toggleZoom(card);
                 canFlip = true;
             }, 600);
             
-            selectedCards.push(card);
+          
         });
     }
 
     function toggleZoom(card) {
         if (card.classList.contains('zoomed')) {
-            closeZoom();
+            card.classList.remove('zoomed');
+            zoomed = false;
         } else {
-            openZoom(card);
-        }
-    }
-
-    function openZoom(card) {
-        // Закрываем все другие увеличенные карты
-        if (zoomedCard && zoomedCard !== card) {
-            zoomedCard.classList.remove('zoomed');
-        }
         
-        card.classList.add('zoomed');
-        overlay.classList.add('active');
-        playSound(zoomSound);
-        zoomedCard = card;
-        
-        // Можно добавить копирование промокода при долгом нажатии
-        card.addEventListener('contextmenu', handlePromoCode);
-    }
-
-    function closeZoom() {
-        if (zoomedCard) {
-            zoomedCard.classList.remove('zoomed');
-            zoomedCard.removeEventListener('contextmenu', handlePromoCode);
-            zoomedCard = null;
-        }
-        overlay.classList.remove('active');
-    }
-
-    function handlePromoCode(e) {
-        e.preventDefault();
-        const card = e.currentTarget;
-        const promo = card.dataset.promo;
-        
-        if (promo) {
-            // Копируем промокод в буфер обмена
-            navigator.clipboard.writeText(promo).then(() => {
-                showMessage(`Промокод ${promo} скопирован!`);
-            }).catch(() => {
-                showMessage(`Промокод: ${promo}`);
+            document.querySelectorAll('.zoomed').forEach(c => {
+                c.classList.remove('zoomed');
             });
+            
+            card.classList.add('zoomed');
+            playSound(zoomSound);
+            zoomed = true;
         }
     }
 
-    function showMessage(text = 'Скопировано!') {
-        message.textContent = text;
-        message.classList.add('show');
+    function showMessage() {
+        message.style.display = 'block';
         setTimeout(() => {
-            message.classList.remove('show');
+            message.style.display = 'none';
         }, 2000);
     }
-
-    // Закрытие увеличенной карточки при клике на overlay
-    overlay.addEventListener('click', () => {
-        closeZoom();
-    });
-
-    // Закрытие по клавише Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && zoomedCard) {
-            closeZoom();
-        }
-    });
-
-    // Предотвращение закрытия при клике на саму карточку
-    document.addEventListener('click', (e) => {
-        if (zoomedCard && !e.target.closest('.card')) {
-            closeZoom();
-        }
-    });
 });
