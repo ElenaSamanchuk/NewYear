@@ -1,54 +1,176 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-* {
+ @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+  }
 
-html {
+  html {
     scroll-behavior: smooth;
-}
+  }
 
-body {
+  body {
     width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    height: 80vh;
+    overflow-x: hidden;
     background-color: #502781;
     display: flex;
     align-items: center;
     justify-content: center;
-}
+  }
 
-main {
+  main {
     width: 90%;
     height: 90%;
     border-radius: 2vw;
     overflow: hidden;
-    background-color: #6C48B2;
+    background-color: #6c48b2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     padding: 1vw;
-}
+  }
 
-.text {
-    font-family: 'Montserrat', sans-serif;
+  .text {
+    font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 1vw;
     text-align: center;
     color: #fff;
-}
+  }
 
-.yellow {
+  .yellow {
     font-weight: 900;
     font-size: 1.3vw;
-    color: #FEDA00;
+    color: #feda00;
     text-shadow: 0 2px 8px rgba(254, 218, 0, 0.5);
-}
+  }
 
+  .message {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 1vw 2vw;
+    border-radius: 1vw;
+    z-index: 10;
+    display: none;
+  }
 
-.message {
+  .game {
+    display: grid;
+    grid-template-columns: repeat(6, 15%);
+    grid-template-rows: repeat(1, 100%);
+    gap: 2vw;
+    perspective: 50vw;
+  }
+
+  .card {
+    width: 10vw;
+    height: 27vh;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
+    animation: deal 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+    opacity: 0;
+  }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.6s ease;
+  }
+
+  .card-front {
+    transform: rotateY(180deg);
+  }
+
+  .card-back {
+    background-image: url("./img/cover.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 1vw;
+    object-fit: cover;
+    filter: drop-shadow(0 0 0.5vw rgba(0, 0, 0, 0.3));
+  }
+
+  @keyframes deal {
+    0% {
+      transform: translateY(-500px) rotateY(180deg) rotateZ(30deg);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0) rotateY(0) rotateZ(0);
+      opacity: 1;
+    }
+  }
+
+  .card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .card:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  .card:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+  .card:nth-child(6) {
+    animation-delay: 0.6s;
+  }
+
+  .card.flipped .card-front {
+    transform: rotateY(0deg);
+  }
+  .card.flipped .card-back {
+    transform: rotateY(180deg);
+  }
+
+  .card.zoomed {
+    scale: 2;
+    z-index: 1000;
+    position: absolute;
+    left: 40%;
+    top: -20%;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease;
+  }
+
+  .card-img {
+    border-radius: 1vw;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 0.5vw rgba(0, 0, 0, 0.3));
+  }
+
+  .card:hover .card-back,
+  .card:hover .card-front {
+    filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
+  }
+
+  .message {
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 1vw;
@@ -66,139 +188,65 @@ main {
     display: none;
 }
 
-
-.game {
-    display: grid;
-    grid-template-columns: repeat(3, 33%);
-    grid-template-rows: repeat(2, 50%);
-    gap: 1vw;
-    perspective: 50vw;
-}
-
-.card {
-    width: 10vw;
-    height: 26vh;
-    position: relative;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    user-select: none;
-    animation: deal 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
-    opacity: 0;
-}
-
-.card-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 1vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all .6s ease;
-}
-
-.card-front {
-    transform: rotateY(180deg);
-}
-
-.card-back {
-    background-image: url('./img/cover.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 1vw;
-    object-fit: cover;
-    filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
-}
-
-@keyframes deal {
-    0% { transform: translateY(-500px) rotateY(180deg) rotateZ(30deg); opacity: 0; }
-    100% { transform: translateY(0) rotateY(0) rotateZ(0); opacity: 1; }
-}
-
-.card:nth-child(1) { animation-delay: .1s; }
-.card:nth-child(2) { animation-delay: .2s; }
-.card:nth-child(3) { animation-delay: .3s; }
-.card:nth-child(4) { animation-delay: .4s; }
-.card:nth-child(5) { animation-delay: .5s; }
-.card:nth-child(6) { animation-delay: .6s; }
-
-.card.flipped .card-front { transform: rotateY(0deg); }
-.card.flipped .card-back { transform: rotateY(180deg); }
-
-.card.zoomed {
-    scale: 2;
-    z-index: 10;
-    position: absolute;
-    left: 35%;
-    top: 27%;
-    transform: translate(50%, 50%);
-    transition: all .4s ease;
-}
-    
-.card-img {
-    border-radius: 1vw;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 0 .5vw rgba(0, 0, 0, .3));
-}
-
-    .card:hover .card-back,
-.card:hover .card-front
-{
-    filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
-}
-
-@media (max-width: 960px) {
+  @media (max-width: 960px) {
     .text {
-        font-size: 1.5vw;
+      font-size: 1.5vw;
     }
     .yellow {
-        font-size: 2.2vw;
+      font-size: 1.5vw;    
     }
     .card {
-        width: 20vw;
-        height: 26vh;
-    }
- 
-}
-
-@media (max-width: 480px) {
-    body {
-        background-color: #512f7f;
-    }
-    main {
-        padding: 4vw;
+      width: 13vw;
+      height: 20vh;
     }
     .game {
-        grid-template-columns: repeat(2, 50%);
-        grid-template-rows: repeat(3, 33%);
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(2, 50%);
+  }
+
+  .card.zoomed {
+    left: 35%;
+    top: 10%;
+  }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      background-color: #512f7f;
+    }
+    main {
+      padding: 4vw;
+    }
+    .game {
+      grid-template-columns: repeat(2, 50%);
+      grid-template-rows: repeat(3, 33%);
     }
     .text {
-        font-size: 4vw;
+      font-size: 3vw;
     }
-       .yellow {
-        font-size: 5vw;
+    .yellow {
+      font-size: 3vw;
     }
     .card {
-        width: 23vw;
-        height: 17vh;
+      width: 23vw;
+      height: 15vh;
     }
- 
+
     .message {
+      font-size: 3vw;
+      top: 5vw;
+      padding: 2vw 5vw;
+      border-radius: 1vw;
+    }
+    .card.zoomed {
+      scale: 3;
+      left: 25%;
+      top: 30%;
+    }
+     .message {
         font-size: 3vw;
         top: 5vw;
         padding: 2vw 5vw;
         border-radius: 1vw;
     }
-    .card.zoomed {
-        scale: 3;
-        left: 25%;
-        top: 30%;
-    }
-}
-
-
-
+  }
