@@ -69,8 +69,8 @@ main {
 
 .game {
     display: grid;
-    grid-template-columns: repeat(6, 16%);
-    grid-template-rows: repeat(1, 100%);
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(2, 50%);
     gap: 1vw;
     perspective: 50vw;
 }
@@ -199,5 +199,6 @@ main {
         top: 30%;
     }
 }
+
 
 
