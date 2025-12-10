@@ -170,24 +170,6 @@
     filter: drop-shadow(0 0 1.2vw rgba(254, 218, 0, 0.6));
   }
 
-  .message {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
-    font-size: 1vw;
-    text-align: center;
-    text-transform: uppercase;
-    color: #fff;
-    position: fixed;
-    top: 1vw;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, .8);
-    padding: 1vw 2vw;
-    border-radius: 1vw;
-    z-index: 10;
-    display: none;
-}
-
   @media (max-width: 960px) {
     .text {
       font-size: 1.5vw;
@@ -234,7 +216,6 @@
 
     .message {
       font-size: 3vw;
-      top: 5vw;
       padding: 2vw 5vw;
       border-radius: 1vw;
     }
@@ -243,12 +224,7 @@
       left: 25%;
       top: 30%;
     }
-     .message {
-        font-size: 3vw;
-        top: 5vw;
-        padding: 2vw 5vw;
-        border-radius: 1vw;
-    }
   }
+
 
 
